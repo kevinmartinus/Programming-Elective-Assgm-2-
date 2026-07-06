@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+         https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+
+    <display-name>FeastOrder</display-name>
+
+    <!--
+        NOTE: Since each Servlet stub already uses @WebServlet(...) annotations
+        for URL mapping, you do NOT strictly need <servlet-mapping> entries
+        here as well — annotations are enough on most modern servers
+        (Tomcat 8.5+, etc). Keep this file mainly for:
+
+        1. welcome-file-list (which page loads at the root URL)
+        2. session-config (timeout)
+        3. error-page mappings (nice touch, not required by rubric)
+
+        TODO for your team: if your server/IDE requires explicit XML
+        mappings instead of annotations, add <servlet> and <servlet-mapping>
+        blocks here matching each Servlet class you created.
+    -->
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+    <session-config>
+        <session-timeout>30</session-timeout> <!-- minutes -->
+    </session-config>
+
+</web-app>

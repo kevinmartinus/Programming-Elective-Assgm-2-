@@ -1,0 +1,45 @@
+/*
+    FeastOrder — Stylesheet
+    ------------------------------------------------------------
+    TODO for your team:
+
+    1. Decide: pure custom CSS, or Bootstrap + custom overrides?
+       (Rubric allows either — "you may use Bootstrap")
+
+    2. Define a consistent color palette + typography at the top as CSS
+       variables, e.g.:
+         :root {
+             --color-primary: #...;
+             --color-secondary: #...;
+             --font-heading: ...;
+             --font-body: ...;
+         }
+
+    3. Style each page: navbar, homepage hero, menu grid/cards, forms
+       (register/login/checkout), admin tables, footer.
+
+    4. RESPONSIVENESS (rubric 1b, 10 marks) — use media queries or
+       Bootstrap's grid so the site adapts to mobile/tablet/desktop:
+         @media (max-width: 768px) { ... }
+
+    5. Keep this file organized with section comments as it grows, e.g.:
+       /* ==== Navbar ==== */
+       /* ==== Homepage ==== */
+       /* ==== Menu Page ==== */
+       /* ==== Forms ==== */
+       /* ==== Admin ==== */
+*/
+
+/* ==== Base Reset (safe to keep as-is) ==== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+}
+
+/* TODO: add the rest of your styles below */
