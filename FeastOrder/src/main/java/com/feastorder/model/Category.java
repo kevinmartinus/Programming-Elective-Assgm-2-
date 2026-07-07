@@ -1,25 +1,42 @@
 package com.feastorder.model;
 
-/**
- * MODEL: Category
- * ------------------------------------------------------------
- * Represents a row in your `categories` table
- * (e.g. "Appetizers", "Main Course", "Desserts", "Drinks").
- *
- * TODO for your team:
- * 1. Add fields:
- *      - int categoryId
- *      - String categoryName
- *      - String description (optional)
- *
- * 2. Generate getters/setters.
- *
- * Used by: Menu Page (grouping items), Admin Dashboard (manage categories - rubric 2b).
- */
+/** Represents a row in the `categories` table (e.g. Appetizers, Desserts). */
 public class Category {
 
-    // TODO: declare fields here
+    private int categoryId;
+    private String categoryName;
+    private String description;
 
-    // TODO: generate getters and setters here
+    public Category() {
+    }
 
+    public Category(int categoryId, String categoryName, String description) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.description = description;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

@@ -1,58 +1,108 @@
 package com.feastorder.servlet;
 
+import com.feastorder.dao.UserDAO;
+import com.feastorder.model.User;
+
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.regex.Pattern;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/**
- * SERVLET: RegisterServlet
- * ------------------------------------------------------------
- * Handles new user signup.
- * URL mapping suggestion: /register  (also declare this in web.xml, or
- * keep the @WebServlet annotation below if your server supports it)
- *
- * TODO for your team:
- *
- * doGet():
- *   - Simply forward to register.jsp so the form displays
- *     (RequestDispatcher rd = request.getRequestDispatcher("/register.jsp");
- *      rd.forward(request, response);)
- *
- * doPost():
- *   1. Read form fields: username, email, password, confirmPassword, phone
- *      String username = request.getParameter("username");  ... etc
- *   2. SERVER-SIDE VALIDATION (don't trust client-side JS alone):
- *      - all fields non-empty
- *      - email format valid
- *      - password == confirmPassword
- *      - password meets minimum length/complexity
- *   3. Check with UserDAO.isUsernameTaken() / isEmailTaken()
- *      - if taken, set an error attribute and forward back to register.jsp
- *   4. If valid: hash the password, build a User object, call
- *      UserDAO.registerUser(user)
- *   5. On success: redirect to login.jsp with a success message
- *      (use redirect, not forward, to avoid duplicate form resubmission)
- *   6. On failure: forward back to register.jsp with an error message
- *
- * Maps to rubric "2a User Authentication System" (signup with validation).
- */
+/** Handles new user signup: server-side validation, uniqueness checks, hashed storage. */
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$");
+    private static final Pattern PHONE_PATTERN = Pattern.compile("^[0-9+()\\-\\s]{7,20}$");
+
+    private final UserDAO userDAO = new UserDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // TODO: forward to register.jsp
+        request.getRequestDispatcher("/register.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // TODO: implement registration logic described above
+
+        String username = trim(request.getParameter("username"));
+        String email = trim(request.getParameter("email"));
+        String password = request.getParameter("password");
+        String confirmPassword = request.getParameter("confirmPassword");
+        String phoneNumber = trim(request.getParameter("phoneNumber"));
+
+        String error = validate(username, email, password, confirmPassword, phoneNumber);
+
+        if (error == null) {
+            try {
+                if (userDAO.isUsernameTaken(username)) {
+                    error = "That username is already taken.";
+                } else if (userDAO.isEmailTaken(email)) {
+                    error = "That email is already registered.";
+                }
+            } catch (SQLException e) {
+                throw new ServletException("Database error during registration", e);
+            }
+        }
+
+        if (error != null) {
+            request.setAttribute("error", error);
+            request.setAttribute("username", username);
+            request.setAttribute("email", email);
+            request.setAttribute("phoneNumber", phoneNumber);
+            request.getRequestDispatcher("/register.jsp").forward(request, response);
+            return;
+        }
+
+        User user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
+        user.setRole("customer");
+
+        try {
+            userDAO.registerUser(user, password);
+        } catch (SQLException e) {
+            throw new ServletException("Database error during registration", e);
+        }
+
+        response.sendRedirect(request.getContextPath() + "/login.jsp?registered=true");
+    }
+
+    private String validate(String username, String email, String password,
+                             String confirmPassword, String phoneNumber) {
+        if (isBlank(username) || isBlank(email) || isBlank(password)
+                || isBlank(confirmPassword) || isBlank(phoneNumber)) {
+            return "All fields are required.";
+        }
+        if (!EMAIL_PATTERN.matcher(email).matches()) {
+            return "Please enter a valid email address.";
+        }
+        if (!PHONE_PATTERN.matcher(phoneNumber).matches()) {
+            return "Please enter a valid phone number.";
+        }
+        if (password.length() < 8) {
+            return "Password must be at least 8 characters long.";
+        }
+        if (!password.equals(confirmPassword)) {
+            return "Passwords do not match.";
+        }
+        return null;
+    }
+
+    private boolean isBlank(String value) {
+        return value == null || value.isBlank();
+    }
+
+    private String trim(String value) {
+        return value == null ? null : value.trim();
     }
 }

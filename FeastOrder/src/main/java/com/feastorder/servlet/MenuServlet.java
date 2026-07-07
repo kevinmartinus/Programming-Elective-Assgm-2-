@@ -1,42 +1,52 @@
 package com.feastorder.servlet;
 
+import com.feastorder.dao.MenuDAO;
+import com.feastorder.model.Category;
+import com.feastorder.model.MenuItem;
+
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/**
- * SERVLET: MenuServlet
- * ------------------------------------------------------------
- * Loads menu items (all, or filtered by category) and forwards to menu.jsp.
- * URL mapping suggestion: /menu
- *
- * TODO for your team:
- *
- * doGet():
- *   1. Read optional "category" parameter:
- *        String categoryId = request.getParameter("categoryId");
- *   2. Call MenuDAO.getAllMenuItems() or getMenuItemsByCategory(categoryId)
- *   3. Also call MenuDAO.getAllCategories() so the JSP can render category
- *      filter buttons/tabs
- *   4. request.setAttribute("menuItems", items);
- *      request.setAttribute("categories", categories);
- *   5. RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/user/menu.jsp");
- *      rd.forward(request, response);
- *
- * Maps to rubric "1a Page Development" (Menu Page: categorized items,
- * ingredients, pricing, images, ratings).
- */
+/** Loads menu items (all, or filtered by category) and forwards to menu.jsp. */
 @WebServlet("/menu")
 public class MenuServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    private final MenuDAO menuDAO = new MenuDAO();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // TODO: implement logic described above
+
+        String categoryIdParam = request.getParameter("categoryId");
+
+        try {
+            List<MenuItem> items;
+            if (categoryIdParam != null && !categoryIdParam.isBlank()) {
+                int categoryId = Integer.parseInt(categoryIdParam);
+                items = menuDAO.getMenuItemsByCategory(categoryId);
+            } else {
+                items = menuDAO.getAllMenuItems();
+            }
+            List<Category> categories = menuDAO.getAllCategories();
+
+            request.setAttribute("menuItems", items);
+            request.setAttribute("categories", categories);
+            request.setAttribute("selectedCategoryId", categoryIdParam);
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Invalid category.");
+        } catch (SQLException e) {
+            throw new ServletException("Database error loading menu", e);
+        }
+
+        request.getRequestDispatcher("/WEB-INF/jsp/user/menu.jsp").forward(request, response);
     }
 }

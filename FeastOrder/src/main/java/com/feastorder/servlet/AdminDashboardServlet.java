@@ -1,5 +1,7 @@
 package com.feastorder.servlet;
 
+import com.feastorder.model.User;
+
 import java.io.IOException;
 
 import jakarta.servlet.ServletException;
@@ -9,9 +11,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-/** Ends the current session. */
-@WebServlet("/logout")
-public class LogoutServlet extends HttpServlet {
+/** Landing page after admin login: links to menu management and order viewing. */
+@WebServlet("/admin/dashboard")
+public class AdminDashboardServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -19,9 +21,12 @@ public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
+        User user = (session != null) ? (User) session.getAttribute("user") : null;
+        if (user == null || !user.isAdmin()) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
         }
-        response.sendRedirect(request.getContextPath() + "/index.html");
+
+        request.getRequestDispatcher("/WEB-INF/jsp/admin/dashboard.jsp").forward(request, response);
     }
 }

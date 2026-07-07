@@ -1,31 +1,99 @@
 package com.feastorder.model;
 
-/**
- * MODEL: MenuItem
- * ------------------------------------------------------------
- * Represents a row in your `menu_items` table.
- *
- * TODO for your team:
- * 1. Add fields matching your DB schema, e.g.:
- *      - int itemId
- *      - String name
- *      - String description
- *      - double price
- *      - String category        (links to Category, e.g. "Appetizer", "Main", "Dessert")
- *      - String imageUrl
- *      - double rating
- *      - int stockOrAvailability (optional)
- *
- * 2. Generate getters/setters.
- *
- * This maps directly to rubric item "1a Page Development" (Menu Page needs
- * ingredients, pricing, ratings, images) and "2b Admin & DB Connectivity"
- * (admin adds/edits/deletes these).
- */
+/** Represents a row in the `menu_items` table. */
 public class MenuItem {
 
-    // TODO: declare fields here
+    private int itemId;
+    private int categoryId;
+    private String categoryName; // denormalized, convenient for display
+    private String name;
+    private String description;      // ingredients / description
+    private String nutritionalInfo;
+    private double price;
+    private String imageUrl;
+    private double rating;
+    private boolean available;
 
-    // TODO: generate getters and setters here
+    public MenuItem() {
+    }
 
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getNutritionalInfo() {
+        return nutritionalInfo;
+    }
+
+    public void setNutritionalInfo(String nutritionalInfo) {
+        this.nutritionalInfo = nutritionalInfo;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
 }

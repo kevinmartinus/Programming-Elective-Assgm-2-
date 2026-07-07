@@ -1,35 +1,52 @@
 package com.feastorder.util;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
 /**
- * UTILITY: DBConnection
- * ------------------------------------------------------------
- * Central place to open a connection to your MySQL database.
- * Every DAO class will call DBConnection.getConnection() instead of
- * repeating JDBC boilerplate everywhere.
+ * Central place to open a connection to the MySQL database. Every DAO calls
+ * DBConnection.getConnection() instead of repeating JDBC boilerplate.
  *
- * TODO for your team:
- * 1. Add constants for your DB connection details:
- *      private static final String URL = "jdbc:mysql://localhost:3306/feastorder_db";
- *      private static final String USER = "root";
- *      private static final String PASSWORD = "your_password";
- *
- * 2. In a static block, load the JDBC driver:
- *      Class.forName("com.mysql.cj.jdbc.Driver");
- *
- * 3. Write a method:
- *      public static Connection getConnection() throws SQLException {
- *          return DriverManager.getConnection(URL, USER, PASSWORD);
- *      }
- *
- * 4. Make sure the MySQL Connector/J .jar is added to
- *    src/main/webapp/WEB-INF/lib/ (already created for you).
- *
- * IMPORTANT: never hardcode real passwords if you plan to share this
- * repo publicly — consider using a properties file instead once the
- * basic version works.
+ * Connection details are read from db.properties on the classpath
+ * (src/main/resources/db.properties) rather than hardcoded, so credentials
+ * can differ per machine without touching code.
  */
 public class DBConnection {
 
-    // TODO: add connection fields + static getConnection() method here
+    private static final String URL;
+    private static final String USER;
+    private static final String PASSWORD;
 
+    static {
+        Properties props = new Properties();
+        try (InputStream in = DBConnection.class.getClassLoader().getResourceAsStream("db.properties")) {
+            if (in == null) {
+                throw new IllegalStateException("db.properties not found on classpath");
+            }
+            props.load(in);
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to load db.properties", e);
+        }
+
+        URL = props.getProperty("db.url");
+        USER = props.getProperty("db.user");
+        PASSWORD = props.getProperty("db.password");
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException("MySQL JDBC driver not found on classpath", e);
+        }
+    }
+
+    private DBConnection() {
+    }
+
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
+    }
 }
