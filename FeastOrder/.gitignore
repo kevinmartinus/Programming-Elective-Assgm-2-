@@ -1,0 +1,10 @@
+*.class
+target/
+build/
+bin/
+out/
+.settings/
+.project
+.classpath
+*.war
+*.zip

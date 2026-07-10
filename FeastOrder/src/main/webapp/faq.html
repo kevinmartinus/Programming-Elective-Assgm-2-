@@ -2,20 +2,249 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>FeastOrder - FAQ</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="bg-light">
 
-    <!--
-        FAQ PAGE — TODO for your team:
-        - Common questions: delivery time, payment methods, refund policy,
-          how to create an account, etc.
-        - Simple accordion-style expand/collapse using main.js is a nice
-          touch for the "Page Styling and Responsiveness" rubric item.
-    -->
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <div class="container">
+                <a href="index.html" class="navbar-brand fw-bold">
+                    <i class="bi bi-shop"></i> FeastOrder
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navMenu">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="menu">Menu</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="faq.html">FAQ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-    <h1>Frequently Asked Questions</h1>
+    <section class="bg-dark text-white text-center py-5">
+        <div class="container">
+            <div class="faq-hero-icon mb-3">
+                <i class="bi bi-chat-quote"></i>
+            </div>
+            <h6 class="text-uppercase mb-2">Here to Help</h6>
+            <h1 class="fw-bold display-5 mb-3">Frequently Asked Questions</h1>
+            <p class="lead mb-0 mx-auto" style="max-width: 620px;">
+                Everything you'd like to know about ordering, payments, and delivery with
+                FeastOrder — curated for a seamless, unhurried dining experience.
+            </p>
+        </div>
+    </section>
 
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-9">
+
+                <div class="mb-4 faq-search">
+                    <label for="faqSearch" class="form-label visually-hidden">Search FAQs</label>
+                    <div class="input-group input-group-lg shadow-sm">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input type="text" id="faqSearch" class="form-control" placeholder="Find something, e.g., 'refund' or 'delivery'">
+                    </div>
+                </div>
+
+                <p id="faqNoResults" class="text-center text-muted d-none py-4">
+                    No results found. Try a different search term, or
+                    <a href="contact.html">reach out to us directly</a>.
+                </p>
+
+                <!-- ORDERING -->
+                <div class="faq-category-header">
+                    <span class="faq-category-number">01</span>
+                    <h4><i class="bi bi-basket3"></i> Ordering</h4>
+                </div>
+                <div class="faq-group mb-4">
+
+                    <div class="faq-item border rounded mb-3 bg-white">
+                        <button type="button" class="faq-question d-flex justify-content-between align-items-center p-4 w-100 border-0 bg-transparent text-start">
+                            <span class="fw-semibold">How do I place an order on FeastOrder?</span>
+                            <i class="bi bi-chevron-down toggle-icon"></i>
+                        </button>
+                        <div class="faq-answer px-4">
+                            <div class="pb-4 text-muted">
+                                Browse the <a href="menu">menu page</a>, choose a category (appetizers, main course,
+                                or desserts), and click on any item to see its ingredients, nutritional
+                                information, and price. Select your quantity and any add-ons — like extra cheese
+                                or a drink — then add it to your cart. When you're ready, go to your cart to review
+                                your order and proceed to checkout.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item border rounded mb-3 bg-white">
+                        <button type="button" class="faq-question d-flex justify-content-between align-items-center p-4 w-100 border-0 bg-transparent text-start">
+                            <span class="fw-semibold">Do I need an account to place an order?</span>
+                            <i class="bi bi-chevron-down toggle-icon"></i>
+                        </button>
+                        <div class="faq-answer px-4">
+                            <div class="pb-4 text-muted">
+                                Yes. Browsing the menu is open to everyone, but you'll need to
+                                <a href="register.jsp">create a free account</a> before checking out, so we can
+                                keep track of your order history and send you confirmation details.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ACCOUNT -->
+                <div class="faq-category-header">
+                    <span class="faq-category-number">02</span>
+                    <h4><i class="bi bi-person-circle"></i> Account</h4>
+                </div>
+                <div class="faq-group mb-4">
+
+                    <div class="faq-item border rounded mb-3 bg-white">
+                        <button type="button" class="faq-question d-flex justify-content-between align-items-center p-4 w-100 border-0 bg-transparent text-start">
+                            <span class="fw-semibold">How do I create an account on FeastOrder?</span>
+                            <i class="bi bi-chevron-down toggle-icon"></i>
+                        </button>
+                        <div class="faq-answer px-4">
+                            <div class="pb-4 text-muted">
+                                Click <a href="register.jsp">Register</a> and fill in your username, full name,
+                                email address, phone number, and a password (minimum 8 characters). Once you
+                                submit the form, you'll be redirected to the login page to sign in with your new account.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item border rounded mb-3 bg-white">
+                        <button type="button" class="faq-question d-flex justify-content-between align-items-center p-4 w-100 border-0 bg-transparent text-start">
+                            <span class="fw-semibold">Is my personal information secure?</span>
+                            <i class="bi bi-chevron-down toggle-icon"></i>
+                        </button>
+                        <div class="faq-answer px-4">
+                            <div class="pb-4 text-muted">
+                                Yes. Passwords are never stored in plain text, and your account details are only
+                                used to process your orders and improve your experience on FeastOrder. We do not
+                                share your personal information with third parties without your consent.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- PAYMENT -->
+                <div class="faq-category-header">
+                    <span class="faq-category-number">03</span>
+                    <h4><i class="bi bi-credit-card"></i> Payment</h4>
+                </div>
+                <div class="faq-group mb-4">
+
+                    <div class="faq-item border rounded mb-3 bg-white">
+                        <button type="button" class="faq-question d-flex justify-content-between align-items-center p-4 w-100 border-0 bg-transparent text-start">
+                            <span class="fw-semibold">What payment methods do you accept?</span>
+                            <i class="bi bi-chevron-down toggle-icon"></i>
+                        </button>
+                        <div class="faq-answer px-4">
+                            <div class="pb-4 text-muted">
+                                FeastOrder currently supports major credit and debit cards (Visa, MasterCard) and
+                                cash on delivery. You can choose your preferred method during checkout, before
+                                confirming your order.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item border rounded mb-3 bg-white">
+                        <button type="button" class="faq-question d-flex justify-content-between align-items-center p-4 w-100 border-0 bg-transparent text-start">
+                            <span class="fw-semibold">Will I get a receipt for my purchase?</span>
+                            <i class="bi bi-chevron-down toggle-icon"></i>
+                        </button>
+                        <div class="faq-answer px-4">
+                            <div class="pb-4 text-muted">
+                                Yes. After checkout, you'll see an order confirmation page summarizing your items,
+                                add-ons, total price, and order time. This is also saved to your account's order history.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item border rounded mb-3 bg-white">
+                        <button type="button" class="faq-question d-flex justify-content-between align-items-center p-4 w-100 border-0 bg-transparent text-start">
+                            <span class="fw-semibold">What is FeastOrder's refund policy?</span>
+                            <i class="bi bi-chevron-down toggle-icon"></i>
+                        </button>
+                        <div class="faq-answer px-4">
+                            <div class="pb-4 text-muted">
+                                If an item is missing, incorrect, or below quality expectations, contact us within
+                                24 hours via the <a href="contact.html">Contact page</a> with your order details,
+                                and our team will review it for a refund or replacement.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- DELIVERY -->
+                <div class="faq-category-header">
+                    <span class="faq-category-number">04</span>
+                    <h4><i class="bi bi-truck"></i> Delivery</h4>
+                </div>
+                <div class="faq-group mb-4">
+
+                    <div class="faq-item border rounded mb-3 bg-white">
+                        <button type="button" class="faq-question d-flex justify-content-between align-items-center p-4 w-100 border-0 bg-transparent text-start">
+                            <span class="fw-semibold">How long does delivery take?</span>
+                            <i class="bi bi-chevron-down toggle-icon"></i>
+                        </button>
+                        <div class="faq-answer px-4">
+                            <div class="pb-4 text-muted">
+                                Typical delivery time is 30–45 minutes from order confirmation, depending on your
+                                location and order volume at the time.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item border rounded mb-3 bg-white">
+                        <button type="button" class="faq-question d-flex justify-content-between align-items-center p-4 w-100 border-0 bg-transparent text-start">
+                            <span class="fw-semibold">Can I track my order?</span>
+                            <i class="bi bi-chevron-down toggle-icon"></i>
+                        </button>
+                        <div class="faq-answer px-4">
+                            <div class="pb-4 text-muted">
+                                Order status updates (received, preparing, out for delivery, delivered) are shown
+                                on your order confirmation and order history pages after logging in.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Closing CTA — reuses the same dark gold-accented band as the homepage -->
+                <div class="bg-primary text-white text-center py-5 px-4 rounded-4 mt-5">
+                    <h2 class="fw-bold mb-2">Still Have Questions?</h2>
+                    <p class="lead mb-4">Our team is happy to help with anything not covered here.</p>
+                    <a href="contact.html" class="btn btn-primary btn-lg">
+                        <i class="bi bi-envelope me-2"></i>Contact Us
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 FeastOrder. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

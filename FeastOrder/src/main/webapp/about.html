@@ -2,19 +2,266 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>FeastOrder - About Us</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="bg-light">
 
-    <!--
-        ABOUT US PAGE — TODO for your team:
-        - Short story/mission of the restaurant
-        - Team/chef highlights, restaurant photos
-        - This can stay a plain static HTML page since it has no dynamic data.
-    -->
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <div class="container">
+                <a href="index.html" class="navbar-brand fw-bold">
+                    <i class="bi bi-shop"></i> FeastOrder
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navMenu">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="menu">Menu</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-    <h1>About FeastOrder</h1>
+    <!-- Hero -->
+    <section class="text-white text-center d-flex align-items-center"
+              style="background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+                     url('image/FeastOrder_interior1.jpg') center/cover no-repeat;
+                     min-height: 380px;">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Our Story</h1>
+            <p class="lead mb-0">From a single family kitchen to your favorite online order — this is FeastOrder.</p>
+        </div>
+    </section>
 
+    <main>
+
+        <!-- Mission / Story -->
+        <section class="py-5">
+            <div class="container">
+                <div class="row align-items-center g-5">
+                    <div class="col-12 col-lg-6">
+                        <img src="image\FeastOrder_interior2.jpg"
+                             class="img-fluid rounded shadow-sm" alt="Interior of the FeastOrder restaurant">
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <h6 class="text-primary text-uppercase fw-bold">Who We Are</h6>
+                        <h2 class="fw-bold mb-3">Good Food, Made Easy to Order</h2>
+                        <p class="text-muted">
+                            FeastOrder began as a small neighbourhood kitchen with one simple goal: cook honest,
+                            comforting meals and make them easy to order, any time. What started as a handful of
+                            regulars ordering by phone has grown into a full online ordering platform — browse
+                            the menu, customize your order, and check out in just a few clicks. The recipes, and
+                            the care behind them, haven't changed.
+                        </p>
+                        <p class="text-muted">
+                            Every dish on our menu is prepared fresh using ingredients sourced from local
+                            suppliers wherever possible. Whether you're ordering appetizers for a small
+                            gathering or a full family dinner, our kitchen treats every order — big or small —
+                            with the same attention to detail.
+                        </p>
+                        <a href="menu" class="btn btn-primary mt-2">
+                            <i class="bi bi-basket3"></i> Explore Our Menu
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="py-5 bg-dark text-white">
+            <div class="container">
+                <div class="row text-center g-4">
+                    <div class="col-6 col-md-3">
+                        <i class="bi bi-egg-fried fs-1 text-warning"></i>
+                        <h3 class="fw-bold mt-2">50+</h3>
+                        <p class="text-white-50 mb-0">Menu Items</p>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <i class="bi bi-people-fill fs-1 text-warning"></i>
+                        <h3 class="fw-bold mt-2">10,000+</h3>
+                        <p class="text-white-50 mb-0">Happy Customers</p>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <i class="bi bi-basket3-fill fs-1 text-warning"></i>
+                        <h3 class="fw-bold mt-2">15,000+</h3>
+                        <p class="text-white-50 mb-0">Orders Served</p>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <i class="bi bi-star-fill fs-1 text-warning"></i>
+                        <h3 class="fw-bold mt-2">4.8 / 5</h3>
+                        <p class="text-white-50 mb-0">Average Rating</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Values -->
+        <section class="py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h6 class="text-primary text-uppercase fw-bold">What Drives Us</h6>
+                    <h2 class="fw-bold">Our Values</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-12 col-md-4">
+                        <div class="card h-100 border-0 shadow-sm text-center p-4">
+                            <i class="bi bi-award fs-1 text-primary mb-3"></i>
+                            <h5>Quality First</h5>
+                            <p class="text-muted mb-0">
+                                We never compromise on ingredients or preparation — every dish is made to the
+                                same standard, every single time.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="card h-100 border-0 shadow-sm text-center p-4">
+                            <i class="bi bi-lightning-charge fs-1 text-primary mb-3"></i>
+                            <h5>Simple &amp; Reliable Ordering</h5>
+                            <p class="text-muted mb-0">
+                                From browsing the menu to checkout, we keep the ordering process fast, clear,
+                                and frustration-free — every time you order.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="card h-100 border-0 shadow-sm text-center p-4">
+                            <i class="bi bi-heart fs-1 text-primary mb-3"></i>
+                            <h5>Genuine Care</h5>
+                            <p class="text-muted mb-0">
+                                Behind every order is a real customer — our support team is here to make sure
+                                you're actually happy, not just served.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team -->
+        <section class="py-5 bg-white">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h6 class="text-primary text-uppercase fw-bold">Meet the Team</h6>
+                    <h2 class="fw-bold">The People Behind the Kitchen</h2>
+                </div>
+                <div class="row g-4 justify-content-center">
+
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card border-0 shadow-sm text-center h-100">
+                            <img src="image\FO_headChef.jpg" class="card-img-top" alt="Portrait of the Head Chef">
+                            <div class="card-body">
+                                <h6 class="fw-bold mb-0">Head Chef</h6>
+                                <p class="text-muted small mb-0">15+ years in Southeast Asian &amp; fusion cuisine</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card border-0 shadow-sm text-center h-100">
+                            <img src="image\FO_sousChef.jpg" class="card-img-top" alt="Portrait of the Sous Chef">
+                            <div class="card-body">
+                                <h6 class="fw-bold mb-0">Sous Chef</h6>
+                                <p class="text-muted small mb-0">Specialist in desserts &amp; seasonal menus</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card border-0 shadow-sm text-center h-100">
+                            <img src="image\FO_opsManager.jpg" class="card-img-top" alt="Portrait of the Operations Manager">
+                            <div class="card-body">
+                                <h6 class="fw-bold mb-0">Operations Manager</h6>
+                                <p class="text-muted small mb-0">Keeps every order accurate and on track</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card border-0 shadow-sm text-center h-100">
+                            <img src="image\FO_supportLead.jpg" class="card-img-top" alt="Portrait of the Customer Support Lead">
+                            <div class="card-body">
+                                <h6 class="fw-bold mb-0">Customer Support Lead</h6>
+                                <p class="text-muted small mb-0">Here whenever you need us</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section class="py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h6 class="text-primary text-uppercase fw-bold">A Look Inside</h6>
+                    <h2 class="fw-bold">Our Kitchen &amp; Dishes</h2>
+                </div>
+                <div class="row g-3">
+
+                    <div class="col-6 col-md-3">
+                        <div class="gallery-tile" style="background-image: url('image/FO_appetizer.jpg');">
+                            <div class="gallery-tile-overlay"></div>
+                            <span class="gallery-tile-label">Appetizers</span>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-3">
+                        <div class="gallery-tile" style="background-image: url('image/FO_mainCourse.jpg');">
+                            <div class="gallery-tile-overlay"></div>
+                            <span class="gallery-tile-label">Main Course</span>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-3">
+                        <div class="gallery-tile" style="background-image: url('image/FO_dessert.jpg');">
+                            <div class="gallery-tile-overlay"></div>
+                            <span class="gallery-tile-label">Desserts</span>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-3">
+                        <div class="gallery-tile" style="background-image: url('image/FO_kitchen.jpg');">
+                            <div class="gallery-tile-overlay"></div>
+                            <span class="gallery-tile-label">Kitchen</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to action -->
+        <section class="py-5 bg-primary text-white text-center">
+            <div class="container">
+                <h2 class="fw-bold mb-3">Hungry Yet?</h2>
+                <p class="lead mb-4">Explore our full menu and place your order in just a few clicks.</p>
+                <a href="menu" class="btn btn-light btn-lg fw-semibold">
+                    <i class="bi bi-basket3"></i> Order Now
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-dark text-white text-center py-4">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 FeastOrder. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
