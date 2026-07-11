@@ -203,6 +203,60 @@
             text-decoration: none;
         }
         .dish-view-link:hover { color: var(--c-rust); }
+
+        /* ==== Category filter pills ==== */
+        .menu-filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-bottom: 2.5rem;
+        }
+        .filter-pill {
+            padding: 0.5rem 1.25rem;
+            border-radius: 999px;
+            border: 1px solid var(--color-border);
+            background: var(--color-bg-surface);
+            color: var(--color-text-body);
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .filter-pill:hover { border-color: var(--c-gold); color: var(--c-gold-dark); }
+        .filter-pill.active {
+            background: linear-gradient(135deg, var(--c-gold) 0%, var(--c-gold-dark) 100%);
+            border-color: var(--c-gold);
+            color: var(--c-ink);
+            box-shadow: var(--shadow-gold);
+        }
+
+        /* ==== Division panels — clearer visual separation between categories ==== */
+        .menu-division {
+            background: var(--color-bg-surface-alt);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .menu-division:last-of-type { margin-bottom: 0; }
+        @media (min-width: 992px) {
+            .menu-division { padding: 3rem 3rem 2.5rem; }
+        }
+
+        .division-icon-medallion {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--c-gold) 0%, var(--c-gold-dark) 100%);
+            color: var(--c-ink);
+            font-size: 1.6rem;
+            box-shadow: var(--shadow-gold);
+            margin-bottom: 0.75rem;
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -236,6 +290,11 @@
                             </c:otherwise>
                         </c:choose>
 
+                        <li class="nav-item">
+                            <a class="nav-link position-relative" href="${pageContext.request.contextPath}/cart">
+                                <i class="bi bi-cart3 fs-5"></i>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -266,15 +325,19 @@
             <div class="alert alert-danger">${error}</div>
         </c:if>
 
-        <div class="menu-jump-nav">
-            <a href="#section-appetizers">Appetizers</a>
-            <a href="#section-mains">Main Courses</a>
-            <a href="#section-desserts">Desserts</a>
-            <a href="#section-beverages">Beverages</a>
+        <div class="menu-filter-bar">
+            <button type="button" class="filter-pill active" data-filter="all">
+                <i class="bi bi-grid"></i> All
+            </button>
+            <button type="button" class="filter-pill" data-filter="appetizers">Appetizers</button>
+            <button type="button" class="filter-pill" data-filter="mains">Main Courses</button>
+            <button type="button" class="filter-pill" data-filter="desserts">Desserts</button>
+            <button type="button" class="filter-pill" data-filter="beverages">Beverages</button>
         </div>
 
-        <div class="menu-division" id="section-appetizers">
+        <div class="menu-division" id="section-appetizers" data-filter="appetizers">
             <div class="menu-section-header">
+                <div class="division-icon-medallion"><i class="bi bi-egg-fried"></i></div>
                 <span class="section-eyebrow">Chef's Selection</span>
                 <h2 class="fw-bold">Appetizers</h2>
                 <div class="section-divider"></div>
@@ -471,8 +534,9 @@
             </div>
         </div>
 
-        <div class="menu-division" id="section-mains">
+        <div class="menu-division" id="section-mains" data-filter="mains">
             <div class="menu-section-header">
+                <div class="division-icon-medallion"><i class="bi bi-fire"></i></div>
                 <span class="section-eyebrow">Chef's Selection</span>
                 <h2 class="fw-bold">Main Courses</h2>
                 <div class="section-divider"></div>
@@ -793,8 +857,9 @@
             </div>
         </div>
 
-        <div class="menu-division" id="section-desserts">
+        <div class="menu-division" id="section-desserts" data-filter="desserts">
             <div class="menu-section-header">
+                <div class="division-icon-medallion"><i class="bi bi-cake2"></i></div>
                 <span class="section-eyebrow">Chef's Selection</span>
                 <h2 class="fw-bold">Desserts</h2>
                 <div class="section-divider"></div>
@@ -1115,8 +1180,9 @@
             </div>
         </div>
 
-        <div class="menu-division" id="section-beverages">
+        <div class="menu-division" id="section-beverages" data-filter="beverages">
             <div class="menu-section-header">
+                <div class="division-icon-medallion"><i class="bi bi-cup-straw"></i></div>
                 <span class="section-eyebrow">Chef's Selection</span>
                 <h2 class="fw-bold">Beverages</h2>
                 <div class="section-divider"></div>
@@ -1126,14 +1192,14 @@
 
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="dish-card">
-                        <a href="${pageContext.request.contextPath}/menu?itemId=14">
+                        <a href="${pageContext.request.contextPath}/menu_b_aperolS.jsp">
                             <div class="dish-photo" style="background-image: url('https://placehold.co/400x280/e8d9c5/6b3f1d?text=Aperol+Spritz');">
                                 <span class="dish-badge dish-badge-available">Available</span>
                                 <span class="dish-badge dish-badge-price">RM 28.00</span>
                             </div>
                         </a>
                         <div class="dish-info">
-                            <h5><a href="${pageContext.request.contextPath}/menu?itemId=14" class="text-decoration-none text-reset">Aperol Spritz</a></h5>
+                            <h5><a href="${pageContext.request.contextPath}/menu_b_aperolS.jsp" class="text-decoration-none text-reset">Aperol Spritz</a></h5>
                             <div class="dish-rating"><i class="bi bi-star-fill"></i> 4.8 / 5</div>
                             <p class="dish-desc">Aperol, Prosecco, and a splash of soda over ice, finished with a fresh orange slice — Italy's beloved aperitivo</p>
 
@@ -1180,7 +1246,7 @@
                                 </div>
                             </c:if>
 
-                            <a href="${pageContext.request.contextPath}/menu?itemId=14" class="dish-view-link">
+                            <a href="${pageContext.request.contextPath}/menu_b_aperolS.jsp" class="dish-view-link">
                                 View Details <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
@@ -1188,14 +1254,14 @@
                 </div>
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="dish-card">
-                        <a href="${pageContext.request.contextPath}/menu?itemId=15">
+                        <a href="${pageContext.request.contextPath}/menu_b_espressoM.jsp">
                             <div class="dish-photo" style="background-image: url('https://placehold.co/400x280/e8d9c5/6b3f1d?text=Espresso+Martini');">
                                 <span class="dish-badge dish-badge-available">Available</span>
                                 <span class="dish-badge dish-badge-price">RM 32.00</span>
                             </div>
                         </a>
                         <div class="dish-info">
-                            <h5><a href="${pageContext.request.contextPath}/menu?itemId=15" class="text-decoration-none text-reset">Espresso Martini</a></h5>
+                            <h5><a href="${pageContext.request.contextPath}/menu_b_espressoM.jsp" class="text-decoration-none text-reset">Espresso Martini</a></h5>
                             <div class="dish-rating"><i class="bi bi-star-fill"></i> 4.9 / 5</div>
                             <p class="dish-desc">Vodka, coffee liqueur, and a shot of espresso, shaken until dark and frothy</p>
 
@@ -1242,7 +1308,7 @@
                                 </div>
                             </c:if>
 
-                            <a href="${pageContext.request.contextPath}/menu?itemId=15" class="dish-view-link">
+                            <a href="${pageContext.request.contextPath}/menu_b_espressoM.jsp" class="dish-view-link">
                                 View Details <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
@@ -1250,14 +1316,14 @@
                 </div>
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="dish-card">
-                        <a href="${pageContext.request.contextPath}/menu?itemId=16">
+                        <a href="${pageContext.request.contextPath}/menu_b_bellini.jsp">
                             <div class="dish-photo" style="background-image: url('https://placehold.co/400x280/e8d9c5/6b3f1d?text=Bellini');">
                                 <span class="dish-badge dish-badge-available">Available</span>
                                 <span class="dish-badge dish-badge-price">RM 26.00</span>
                             </div>
                         </a>
                         <div class="dish-info">
-                            <h5><a href="${pageContext.request.contextPath}/menu?itemId=16" class="text-decoration-none text-reset">Bellini</a></h5>
+                            <h5><a href="${pageContext.request.contextPath}/menu_b_bellini.jsp" class="text-decoration-none text-reset">Bellini</a></h5>
                             <div class="dish-rating"><i class="bi bi-star-fill"></i> 4.7 / 5</div>
                             <p class="dish-desc">Chilled Prosecco layered with silky white peach purée, a Venetian classic since 1948</p>
 
@@ -1304,7 +1370,7 @@
                                 </div>
                             </c:if>
 
-                            <a href="${pageContext.request.contextPath}/menu?itemId=16" class="dish-view-link">
+                            <a href="${pageContext.request.contextPath}/menu_b_bellini.jsp" class="dish-view-link">
                                 View Details <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
@@ -1312,14 +1378,14 @@
                 </div>
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="dish-card">
-                        <a href="${pageContext.request.contextPath}/menu?itemId=17">
+                        <a href="${pageContext.request.contextPath}/menu_b_negroni.jsp">
                             <div class="dish-photo" style="background-image: url('https://placehold.co/400x280/e8d9c5/6b3f1d?text=Negroni');">
                                 <span class="dish-badge dish-badge-available">Available</span>
                                 <span class="dish-badge dish-badge-price">RM 30.00</span>
                             </div>
                         </a>
                         <div class="dish-info">
-                            <h5><a href="${pageContext.request.contextPath}/menu?itemId=17" class="text-decoration-none text-reset">Negroni</a></h5>
+                            <h5><a href="${pageContext.request.contextPath}/menu_b_negroni.jsp" class="text-decoration-none text-reset">Negroni</a></h5>
                             <div class="dish-rating"><i class="bi bi-star-fill"></i> 4.6 / 5</div>
                             <p class="dish-desc">Equal parts gin, Campari, and sweet vermouth, stirred over ice with an orange twist</p>
 
@@ -1366,7 +1432,7 @@
                                 </div>
                             </c:if>
 
-                            <a href="${pageContext.request.contextPath}/menu?itemId=17" class="dish-view-link">
+                            <a href="${pageContext.request.contextPath}/menu_b_negroni.jsp" class="dish-view-link">
                                 View Details <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
@@ -1374,14 +1440,14 @@
                 </div>
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="dish-card">
-                        <a href="${pageContext.request.contextPath}/menu?itemId=18">
+                        <a href="${pageContext.request.contextPath}/menu_b_affogato.jsp">
                             <div class="dish-photo" style="background-image: url('https://placehold.co/400x280/e8d9c5/6b3f1d?text=Affogato');">
                                 <span class="dish-badge dish-badge-available">Available</span>
                                 <span class="dish-badge dish-badge-price">RM 14.00</span>
                             </div>
                         </a>
                         <div class="dish-info">
-                            <h5><a href="${pageContext.request.contextPath}/menu?itemId=18" class="text-decoration-none text-reset">Affogato al Caffè</a></h5>
+                            <h5><a href="${pageContext.request.contextPath}/menu_b_affogato.jsp" class="text-decoration-none text-reset">Affogato al Caffè</a></h5>
                             <div class="dish-rating"><i class="bi bi-star-fill"></i> 4.9 / 5</div>
                             <p class="dish-desc">A scoop of vanilla gelato “drowned” in a hot shot of espresso — dessert and drink in one, non-alcoholic</p>
 
@@ -1428,7 +1494,7 @@
                                 </div>
                             </c:if>
 
-                            <a href="${pageContext.request.contextPath}/menu?itemId=18" class="dish-view-link">
+                            <a href="${pageContext.request.contextPath}/menu_b_affogato.jsp" class="dish-view-link">
                                 View Details <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
@@ -1449,6 +1515,26 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/main.js"></script>
+
+    <script>
+        // Category filter pills — purely client-side. All items are already
+        // rendered on the page, so a click just toggles which .menu-division
+        // sections are visible; no server round-trip needed.
+        document.querySelectorAll('.filter-pill').forEach(function (pill) {
+            pill.addEventListener('click', function () {
+                document.querySelectorAll('.filter-pill').forEach(function (p) {
+                    p.classList.remove('active');
+                });
+                this.classList.add('active');
+
+                var filter = this.dataset.filter;
+                document.querySelectorAll('.menu-division').forEach(function (division) {
+                    var matches = (filter === 'all' || division.dataset.filter === filter);
+                    division.style.display = matches ? '' : 'none';
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
