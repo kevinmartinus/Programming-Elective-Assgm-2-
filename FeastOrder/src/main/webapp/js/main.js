@@ -138,6 +138,24 @@ function validateContactForm(event) {
   return false;
 }
 
+// Item detail page: +/- buttons for the quantity stepper
+function stepQuantity(button, delta) {
+    const stepper = button.closest('.qty-stepper');
+    if (!stepper) return;
+    const input = stepper.querySelector('.item-quantity');
+    if (!input) return;
+
+    let qty = parseInt(input.value, 10);
+    if (isNaN(qty)) qty = 1;
+    qty += delta;
+    if (qty < 1) qty = 1;
+    if (qty > 20) qty = 20;
+    input.value = qty;
+
+    const feedback = button.closest('form').querySelector('.qty-feedback');
+    if (feedback) feedback.textContent = '';
+}
+
 // Checkout Form Validation (validates all .item-quantity inputs within a given form)
 function validateCheckoutForm(formElement) {
   let isValid = true;
