@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <%-- Defense-in-depth: re-check admin session even though AdminOrderServlet
      already gated this request. If someone hits this JSP directly (bypassing
@@ -15,15 +16,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Orders — FeastOrder Admin</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <style>
-        .orders-page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 24px;
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+        }
+        .admin-hero {
+            text-align: center;
+            padding: 2.5rem 1rem;
+        }
+        .admin-hero .eyebrow {
+            display: inline-block;
+            font-family: var(--font-body);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--c-gold-light);
+            margin-bottom: 0.4rem;
+        }
+        .admin-hero h1 { color: #fff; margin: 0 0 0.5rem; font-size: 2rem; }
+        .admin-hero .hero-divider {
+            width: 140px;
+            height: 20px;
+            margin: 0.75rem auto 0;
+            background-image: var(--ornament-divider);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            filter: brightness(1.4);
         }
         .stat-cards {
             display: grid;
@@ -32,126 +57,162 @@
             margin-bottom: 28px;
         }
         .stat-card {
-            background: #fff;
-            border: 1px solid #e2e2e2;
-            border-radius: 10px;
+            background: var(--color-bg-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
             padding: 16px 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
         }
-        .stat-card .stat-label { font-size: 0.8rem; color: #777; text-transform: uppercase; letter-spacing: 0.03em; }
-        .stat-card .stat-value { font-size: 1.6rem; font-weight: 700; color: #222; margin-top: 4px; }
+        .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .stat-card .stat-label { font-size: 0.8rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+        .stat-card .stat-value {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--c-gold-dark);
+            margin-top: 4px;
+        }
 
         .filter-bar {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
             align-items: center;
-            background: #fafafa;
-            border: 1px solid #eee;
-            border-radius: 8px;
+            background: var(--color-bg-surface-alt);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
             padding: 12px 16px;
             margin-bottom: 20px;
         }
         .filter-bar select {
             padding: 6px 10px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--color-border);
+            background: var(--color-bg-surface);
+            color: var(--color-text-body);
         }
         .filter-bar button, .filter-bar a.reset-link {
-            padding: 6px 14px;
-            border-radius: 6px;
+            padding: 6px 16px;
+            border-radius: 999px;
             border: none;
-            background: #d9534f;
-            color: #fff;
             cursor: pointer;
             font-size: 0.9rem;
+            font-weight: 600;
             text-decoration: none;
+            transition: var(--transition);
         }
-        .filter-bar button { background: #2c7a4b; }
+        .filter-bar button {
+            background: linear-gradient(135deg, var(--c-gold) 0%, var(--c-gold-dark) 100%);
+            color: var(--c-ink);
+            box-shadow: var(--shadow-gold);
+        }
+        .filter-bar button:hover { filter: brightness(1.06); }
+        .filter-bar a.reset-link {
+            background: transparent;
+            color: var(--c-rust);
+            border: 1px solid rgba(133,67,30,0.4);
+        }
+        .filter-bar a.reset-link:hover { background: var(--color-danger-bg); }
 
         table.orders-table {
             width: 100%;
             border-collapse: collapse;
-            background: #fff;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            background: var(--color-bg-surface);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
         table.orders-table th, table.orders-table td {
             padding: 12px 14px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--color-border);
             text-align: left;
             vertical-align: top;
         }
         table.orders-table th {
-            background: #f5f5f5;
-            font-size: 0.85rem;
+            background: var(--color-bg-surface-alt);
+            font-size: 0.78rem;
             text-transform: uppercase;
-            letter-spacing: 0.02em;
-            color: #555;
+            letter-spacing: 0.06em;
+            color: var(--color-heading);
+            font-family: var(--font-body);
+            font-weight: 700;
         }
-        tr.order-row { cursor: pointer; }
-        tr.order-row:hover { background: #fafcf9; }
+        tr.order-row { cursor: pointer; transition: var(--transition); }
+        tr.order-row:hover { background: var(--color-bg-surface-alt); }
 
-        .customer-email { font-size: 0.82rem; color: #888; }
+        .customer-email { font-size: 0.82rem; color: var(--color-text-muted); }
 
         .status-badge {
             display: inline-block;
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 999px;
-            font-size: 0.78rem;
-            font-weight: 600;
+            font-size: 0.75rem;
+            font-weight: 700;
             text-transform: capitalize;
+            letter-spacing: 0.02em;
         }
-        .status-PENDING          { background: #fff3cd; color: #8a6d00; }
-        .status-PREPARING        { background: #d9edf7; color: #1b6a91; }
-        .status-OUT_FOR_DELIVERY { background: #e2d9f7; color: #5b2d91; }
-        .status-DELIVERED        { background: #d4edda; color: #1e7e34; }
-        .status-CANCELLED        { background: #f8d7da; color: #a12a2a; }
+        .status-PENDING          { background: rgba(211,152,88,0.2);  color: var(--c-gold-dark); }
+        .status-PREPARING        { background: rgba(128,153,118,0.2); color: var(--c-sage-dark); }
+        .status-OUT_FOR_DELIVERY { background: rgba(40,65,57,0.15);   color: var(--c-forest-dark); }
+        .status-DELIVERED        { background: rgba(128,153,118,0.3); color: var(--c-sage-dark); }
+        .status-CANCELLED        { background: rgba(133,67,30,0.18); color: var(--c-rust); }
 
-        .items-summary { font-size: 0.88rem; color: #444; }
-        .expand-toggle { font-size: 0.78rem; color: #2c7a4b; margin-left: 6px; }
+        .items-summary { font-size: 0.88rem; color: var(--color-text-body); }
+        .expand-toggle { font-size: 0.78rem; color: var(--c-gold-dark); margin-left: 6px; font-weight: 600; }
 
-        tr.detail-row { display: none; background: #fbfbfb; }
+        tr.detail-row { display: none; background: var(--color-bg-surface-alt); }
         tr.detail-row.open { display: table-row; }
         .detail-inner { padding: 10px 14px 16px 34px; }
         table.item-breakdown { width: 100%; border-collapse: collapse; margin-top: 6px; }
         table.item-breakdown th, table.item-breakdown td {
             padding: 6px 10px;
             font-size: 0.86rem;
-            border-bottom: 1px dashed #ddd;
+            border-bottom: 1px dashed var(--color-border);
         }
-        table.item-breakdown th { background: transparent; color: #999; font-weight: 600; }
+        table.item-breakdown th { background: transparent; color: var(--color-text-muted); font-weight: 600; }
 
         .status-update-form { display: flex; gap: 6px; align-items: center; }
-        .status-update-form select { padding: 4px 6px; border-radius: 5px; border: 1px solid #ccc; font-size: 0.82rem; }
+        .status-update-form select {
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--color-border);
+            font-size: 0.82rem;
+        }
         .status-update-form button {
-            padding: 4px 10px;
+            padding: 4px 12px;
             border: none;
-            border-radius: 5px;
-            background: #333;
+            border-radius: 999px;
+            background: var(--c-ink);
             color: #fff;
             font-size: 0.8rem;
+            font-weight: 600;
             cursor: pointer;
+            transition: var(--transition);
         }
+        .status-update-form button:hover { background: var(--c-forest-dark); }
 
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            color: #888;
-            background: #fff;
-            border-radius: 8px;
-            border: 1px dashed #ddd;
+            color: var(--color-text-muted);
+            background: var(--color-bg-surface);
+            border-radius: var(--radius-md);
+            border: 1px dashed var(--color-border);
         }
     </style>
 </head>
-<body>
+<body class="bg-light">
 
-    <%@ include file="adminNavbar.jsp" %>
+    <%@ include file="adminNavBar.jsp" %>
+
+    <section class="bg-dark admin-hero">
+        <span class="eyebrow">Admin Panel</span>
+        <h1>Customer Orders</h1>
+        <div class="hero-divider"></div>
+    </section>
 
     <div class="admin-container">
-
-        <div class="orders-page-header">
-            <h1>Customer Orders</h1>
-        </div>
 
         <%-- Quick stats — same visual language as dashboard.jsp's stat cards --%>
         <div class="stat-cards">

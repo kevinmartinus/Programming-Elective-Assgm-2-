@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>FeastOrder - Register</title>
-    <link   rel="stylesheet" href="css/style.css">
-    <link   rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link  rel="stylesheet" href="css/style.css">
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
 <body>
     <header>

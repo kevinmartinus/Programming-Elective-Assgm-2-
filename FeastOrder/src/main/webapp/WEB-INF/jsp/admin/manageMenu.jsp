@@ -10,13 +10,49 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+
+    <style>
+        .admin-hero {
+            text-align: center;
+            padding: 2.5rem 1rem;
+        }
+        .admin-hero .eyebrow {
+            display: inline-block;
+            font-family: var(--font-body);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--c-gold-light);
+            margin-bottom: 0.4rem;
+        }
+        .admin-hero h2 { color: #fff; margin: 0 0 0.5rem; }
+        .admin-hero .hero-divider {
+            width: 140px;
+            height: 20px;
+            margin: 0.75rem auto 0;
+            background-image: var(--ornament-divider);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            filter: brightness(1.4);
+        }
+
+        .card.shadow-sm { transition: var(--transition); }
+        .card.shadow-sm:hover { box-shadow: var(--shadow-md) !important; }
+    </style>
 </head>
 <body class="bg-light">
 
-    <%@ include file="adminNavbar.jsp" %>
+    <%@ include file="adminNavBar.jsp" %>
+
+    <section class="bg-dark admin-hero">
+        <span class="eyebrow">Admin Panel</span>
+        <h2><i class="bi bi-egg-fried"></i> Manage Menu</h2>
+        <div class="hero-divider"></div>
+    </section>
 
     <div class="container py-5">
-        <h2 class="mb-4"><i class="bi bi-egg-fried"></i> Manage Menu</h2>
 
         <c:if test="${not empty message}">
             <div class="alert ${isError ? 'alert-danger' : 'alert-success'} alert-dismissible fade show">
@@ -25,11 +61,12 @@
             </div>
         </c:if>
 
+
         <!-- MENU ITEMS TABLE -->
         <div class="card shadow-sm border-0 mb-5">
             <div class="card-header d-flex justify-content-between align-items-center bg-white">
                 <h5 class="mb-0">Current Menu Items (${menuItems.size()})</h5>
-                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#addItemModal">
+                <button class="btn btn-warning btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#addItemModal">
                     <i class="bi bi-plus-circle"></i> Add New Item
                 </button>
             </div>
@@ -71,7 +108,7 @@
                                             </c:choose>
                                         </td>
                                         <td class="text-end">
-                                            <button type="button" class="btn btn-outline-primary btn-sm edit-item-btn"
+                                            <button type="button" class="btn btn-outline-primary btn-sm rounded-pill edit-item-btn"
                                                     data-bs-toggle="modal" data-bs-target="#editItemModal"
                                                     data-item-id="${item.itemId}"
                                                     data-item-name="${item.name}"
@@ -87,7 +124,7 @@
                                                 class="d-inline" onsubmit="return confirm('Delete \'${item.name}\'? This cannot be undone.');">
                                                 <input type="hidden" name="action" value="delete">
                                                 <input type="hidden" name="itemId" value="${item.itemId}">
-                                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill">
                                                     <i class="bi bi-trash"></i> Delete
                                                 </button>
                                             </form>
@@ -126,7 +163,7 @@
                                             onsubmit="return confirm('Delete category \'${cat.categoryName}\'? Items using it must be moved or removed first.');">
                                             <input type="hidden" name="action" value="deleteCategory">
                                             <input type="hidden" name="categoryId" value="${cat.categoryId}">
-                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                            <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </form>
@@ -146,7 +183,7 @@
                                 <label class="form-label small">Description (optional)</label>
                                 <input type="text" name="categoryDescription" class="form-control form-control-sm" maxlength="255">
                             </div>
-                            <button type="submit" class="btn btn-outline-warning btn-sm w-100">
+                            <button type="submit" class="btn btn-outline-warning btn-sm w-100 rounded-pill">
                                 <i class="bi bi-plus-circle"></i> Add Category
                             </button>
                         </form>
@@ -202,8 +239,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-warning">Add Item</button>
+                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-warning rounded-pill">Add Item</button>
                 </div>
             </form>
         </div>
@@ -256,8 +293,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary rounded-pill">Save Changes</button>
                 </div>
             </form>
         </div>

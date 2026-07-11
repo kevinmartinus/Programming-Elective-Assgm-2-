@@ -15,7 +15,7 @@
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item"><span class="nav-link text-light"><i class="bi bi-person-circle"></i> ${sessionScope.user.username}</span></li>
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/index.jsp"><i class="bi bi-house"></i> Storefront</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/index.html"><i class="bi bi-house"></i> Storefront</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/logout"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
             </ul>
         </div>
