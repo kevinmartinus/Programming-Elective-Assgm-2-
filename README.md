@@ -1,9 +1,4 @@
 
-
-https://github.com/user-attachments/assets/9dd204c4-6a42-47b5-b21d-c24f1465e0e5
-
-
-
 # 🍽️ FeastOrder
 
 A full-stack food ordering and kitchen management app. The customers browse the menu, customize, and check out; admins run the kitchen from a separate dashboard. Built for a programming elective as a two-sided system, not just a static menu page.
@@ -62,3 +57,4 @@ Included automatically when you restore the full backup:
 *(Local demo credentials only — for testing the app, not real accounts.)*
 
 ## 🎬 Preview
+https://github.com/user-attachments/assets/9dd204c4-6a42-47b5-b21d-c24f1465e0e5
