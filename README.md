@@ -57,4 +57,6 @@ Included automatically when you restore the full backup:
 *(Local demo credentials only — for testing the app, not real accounts.)*
 
 ## 🎬 Preview
-https://github.com/user-attachments/assets/9dd204c4-6a42-47b5-b21d-c24f1465e0e5
+https://github.com/user-attachments/assets/dc1b1b9c-eee1-4d3e-bb94-90096679309c
+
+
