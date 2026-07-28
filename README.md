@@ -1,6 +1,6 @@
 # 🍽️ FeastOrder
 
-A full-stack food ordering and kitchen management app — customers browse the menu, customize, and check out; admins run the kitchen from a separate dashboard. Built for a programming elective as a two-sided system, not just a static menu page.
+A full-stack food ordering and kitchen management app. The customers browse the menu, customize, and check out; admins run the kitchen from a separate dashboard. Built for a programming elective as a two-sided system, not just a static menu page.
 
 ## ✨ Technologies
 
