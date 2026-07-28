@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.feastorder</groupId>
+    <artifactId>FeastOrder</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
+    <!-- Build target: Java 17, source files read/written as UTF-8 -->
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!--
+        Targets Jakarta EE 10 (jakarta.* namespace), matching the
+        jakarta.servlet imports already used in the servlet classes and the
+        web-app_6_0 schema in web.xml. Requires a Servlet 6.0+ container
+        such as Tomcat 10.1+ (NOT Tomcat 9, which is still javax.*, and not
+        Tomcat 10.0.x, which only supports Servlet 5.0/Jakarta EE 9).
+    -->
+    <dependencies>
+
+        <!-- Core Servlet API (jakarta.servlet.*). "provided" scope: Tomcat
+             already supplies this at runtime, so it's not bundled into the WAR. -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--
+            JSP API - provides jakarta.servlet.jsp.* (JspException, PageContext,
+            HttpJspPage, etc). This is NOT bundled with jakarta.servlet-api or
+            with the JSTL dependencies below - it's a separate artifact. Without
+            it, Eclipse/the JSP compiler can't resolve jakarta.servlet.jsp.*
+            types even though JSTL works fine. 3.1.1 matches Jakarta EE 10 /
+            Servlet 6.0 / Tomcat 10.1+, consistent with jakarta.servlet-api above.
+        -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp</groupId>
+            <artifactId>jakarta.servlet.jsp-api</artifactId>
+            <version>3.1.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--
+            2.0.0 of the impl below still ships TLDs with the OLD
+            http://java.sun.com/jsp/jstl/* URIs despite the jakarta.*
+            coordinates - Jasper can't resolve <%@ taglib uri="jakarta.tags.core" %>
+            against it. 3.0.1 is the first version whose TLDs actually
+            declare the jakarta.tags.* URIs used throughout the JSPs here.
+        -->
+        <!-- JSTL API: <c:...>, <fmt:...> etc. tag definitions used in the JSPs -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+        <!-- JSTL implementation matching the API above -->
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+        <!-- MySQL JDBC driver, used by Hibernate to connect to feastorder_db -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.3.0</version>
+        </dependency>
+
+        <!-- Hibernate ORM: maps entity classes (User, MenuItem, Order, etc.) to database tables -->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.6.2.Final</version>
+        </dependency>
+
+        <!-- Jakarta Persistence API (needed for @Entity, @Id, etc.) -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- Deployed WAR/context path will be "FeastOrder" regardless of version number -->
+        <finalName>FeastOrder</finalName>
+        <plugins>
+
+            <!-- Packages the project into a .war file; doesn't fail the build
+                 if web.xml is missing (not the case here, but kept as a safety net) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+            <!--
+                Auto-creates feastorder_db and restores the full backup
+                (schema + menu data + admin account) on every build, so
+                whoever runs this project doesn't need MySQL Command Line
+                Client or manual SQL. IMPORTANT: update <password> below to
+                match the actual MySQL root password on whichever machine
+                is building this project.
+            -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>1.5</version>
+                <!-- Driver used by the plugin itself to run the SQL below -->
+                <dependencies>
+                    <dependency>
+                        <groupId>com.mysql</groupId>
+                        <artifactId>mysql-connector-j</artifactId>
+                        <version>8.3.0</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <driver>com.mysql.cj.jdbc.Driver</driver>
+                    <username>root</username>
+                    <password>CHANGE PASS</password>
+                    <!-- Don't fail the whole build if a statement errors (e.g. rerunning
+                         INSERTs on a build that's already populated the database) -->
+                    <onError>continue</onError>
+                </configuration>
+                <executions>
+
+                    <!-- Step 1: make sure the database exists before anything else runs -->
+                    <execution>
+                        <id>create-database</id>
+                        <phase>process-resources</phase>
+                        <goals><goal>execute</goal></goals>
+                        <configuration>
+                            <url>jdbc:mysql://localhost:3306/?allowPublicKeyRetrieval=true&amp;useSSL=false</url>
+                            <sqlCommand>CREATE DATABASE IF NOT EXISTS feastorder_db</sqlCommand>
+                        </configuration>
+                    </execution>
+
+                    <!-- Step 2: restore full schema + data + admin account into it -->
+                    <execution>
+                        <id>restore-full-backup</id>
+                        <phase>process-resources</phase>
+                        <goals><goal>execute</goal></goals>
+                        <configuration>
+                            <url>jdbc:mysql://localhost:3306/feastorder_db?allowPublicKeyRetrieval=true&amp;useSSL=false</url>
+                            <srcFiles>
+                                <srcFile>sql/feastorder_full_backup.sql</srcFile>
+                            </srcFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

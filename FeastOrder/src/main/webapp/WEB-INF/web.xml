@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+         https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+    <display-name>FeastOrder</display-name>
+
+    <!-- Servlets are declared via @WebServlet annotations in each class,
+         so no <servlet>/<servlet-mapping> entries are required here.
+         This file only holds app-wide configuration. -->
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+    <!-- Session times out after 30 minutes of inactivity if a page never
+         calls session.setMaxInactiveInterval() itself (LoginServlet already
+         sets 30 min explicitly, this is just the app-wide fallback). -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <!-- Simple error pages instead of raw Tomcat stack traces -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/500.html</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/500.html</location>
+    </error-page>
+
+</web-app>
