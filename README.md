@@ -16,13 +16,13 @@ A full-stack food ordering and kitchen management app. The customers browse the 
 - Browse 18 menu items across 4 categories (Appetizers, Main Courses, Desserts, Beverages)
 - Each dish shows ingredients and add-on options, not just a description
 - Add to cart, customize, and check out
-- Accounts — register, log in, log out
-- Admin dashboard — manage menu items, orders, and users
+- Accounts enable register, log in, log out
+- Admin dashboard can manage menu items, orders, and users
 - Seed data included, so the app is fully populated on first run
 
 ## 📌 The Process
 
-This started as a class assignment, but I wanted it to feel like a real ordering system rather than a form that saves to a table. The trickiest part was keeping the customer-facing flow and the admin dashboard in sync against the same database — getting Hibernate's schema validation to actually match the seed data took a few passes. Once the accounts, menu, and cart were talking to MySQL properly, the rest was building out the two sides: one for people ordering food, one for the kitchen running it.
+This started as a class assignment, but I wanted it to feel like a real ordering system rather than a form that saves to a table. The trickiest part was keeping the customer-facing flow and the admin dashboard in sync against the same database, getting Hibernate's schema validation to actually match the seed data took a few passes. Once the accounts, menu, and cart were talking to MySQL properly, the rest was building out the two sides: one for people ordering food, one for the kitchen running it.
 
 ## 🔋 Running the Project
 
